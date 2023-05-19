@@ -1,0 +1,72 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.filter-section select,
+.filter-section input {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#employee-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.employee-card {
+  width: 300px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.employee-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.employee-card h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.employee-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.employee-card .skills {
+  margin-top: 10px;
+}
+
+.employee-card .skills span {
+  background-color: #eee;
+  padding: 3px 6px;
+  border-radius: 3px;
+  margin-right: 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+.filtered {
+  display: none;
+}
