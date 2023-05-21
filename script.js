@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const nameFilter = document.getElementById("name-filter");
       const designationFilter = document.getElementById("designation-filter");
-      const skillsFilter = document.getElementById("skills-filter");
+      const skillsFilterContainer = document.getElementById(
+        "skills-filter-container"
+      );
 
       const designations = new Set();
       employees.forEach((employee) => {
@@ -27,11 +29,21 @@ document.addEventListener("DOMContentLoaded", function () {
           skills.add(skill);
         });
       });
+
+      // Populate the skills filter with checkboxes
       skills.forEach((skill) => {
-        const option = document.createElement("option");
-        option.text = skill;
-        option.value = skill;
-        skillsFilter.add(option);
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = skill;
+        checkbox.classList.add("skills-filter-checkbox");
+        checkbox.addEventListener("change", filterEmployees);
+
+        const label = document.createElement("label");
+        label.textContent = skill;
+        label.classList.add("skills-filter-label");
+        label.appendChild(checkbox);
+
+        skillsFilterContainer.appendChild(label);
       });
 
       const employeeList = document.getElementById("employee-list");
@@ -43,15 +55,22 @@ document.addEventListener("DOMContentLoaded", function () {
       function filterEmployees() {
         const name = nameFilter.value.toLowerCase();
         const designation = designationFilter.value;
-        const skill = skillsFilter.value;
+        const skills = Array.from(
+          skillsFilterContainer.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          )
+        ).map((checkbox) => checkbox.value);
         const cards = document.getElementsByClassName("employee-card");
 
         Array.from(cards).forEach((card) => {
-          const nameMatch = card.dataset.name.toLowerCase().includes(name);
+          const nameMatch =
+            card.dataset.name.toLowerCase().includes(name) ||
+            skills.some((skill) => card.dataset.name.skills.includes(skill));
           const designationMatch =
             designation === "" || card.dataset.designation === designation;
           const skillMatch =
-            skill === "" || card.dataset.skills.includes(skill);
+            skills.length === 0 ||
+            skills.some((skill) => card.dataset.skills.includes(skill));
 
           if (nameMatch && designationMatch && skillMatch) {
             card.classList.remove("filtered");
@@ -63,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       nameFilter.addEventListener("input", filterEmployees);
       designationFilter.addEventListener("change", filterEmployees);
-      skillsFilter.addEventListener("change", filterEmployees);
+      skillsFilterContainer.addEventListener("change", filterEmployees);
     })
     .catch((error) => {
       console.log("Error loading JSON data:", error);
